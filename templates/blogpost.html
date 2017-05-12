@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>blogpost</title>
+</head>
+<style type="text/css">
+	.art + .art{
+		margin-top: 20px;
+	}
+	.art-title{
+		font-weight: bold;
+		font-size: 20px
+	}
+	.art-body{
+		margin: 0;
+		font-size: 17px;
+	}
+</style>
+<body>
+<center><h1>My Blog</h1></center>
+	{% for blog in blogs %}
+		<div class="art">
+			<div class="art-title">{{blog.subject}}</div>
+			<pre class="art-body">{{blog.content}}</pre>
+			<a href="/delpost/{{blog.key().id()}}" role="button">Delete</a>
+			<a href="/editpost/{{blog.key().id()}}" role="button">Edit</a>
+			<br>
+			<a href="/like/{{blog.key().id()}}" role="button">Like</a>
+			Likes:{{blog.likes}}
+			<br>
+			<br>
+			{% for comment in comments %}
+                {% if comment.blog_id == blog.key().id() %}
+                <pre>
+{{comment.comment}}     -by <b>{{comment.commentator}}<b>
+                </pre>
+
+                <a href="/delcomment/{{comment.key().id()}}" role="button">
+                	Delete
+                </a>
+                <a href="/editcomment/{{comment.key().id()}}" role="button">
+                	Edit
+                </a>
+                <br>
+
+                {% endif %}
+            {% endfor %}
+
+            Comment:
+			<form method="post" action="/newcomment/{{blog.key().id()}}">
+				<textarea name="comment"></textarea>
+				<input type="submit" value="Submit">
+			</form>
+		
+		</div>
+		<br>
+		<br>
+	{% endfor %}
+	<hr>
+</body>
+</html>
