@@ -245,6 +245,7 @@ class Form(Handler):
         name = self.read_secure_cookie("name")
         if not name:
             self.error(404)
+            return
         subject = self.request.get("subject")
         content = self.request.get("content")
         if subject and content:
@@ -319,8 +320,14 @@ class EditComment(Handler):
 
     def post(self, blog_id):
         name = self.read_secure_cookie("name")
+        if not name:
+            self.error(404)
+            return
         comment = self.request.get("comment")
         c = Comment.get_by_id(int(blog_id))
+        if not c:
+            self.error(404)
+            return
         if c.commentator == name:
             c.comment = comment
             c.put()
@@ -359,12 +366,19 @@ class EditPost(Handler):
         name = self.read_secure_cookie("name")
         subject = self.request.get("subject")
         content = self.request.get("content")
-        blog = Blogs.get_by_id(int(blog_id))
-        if blog.user_id == name:
-            blog.subject = subject
-            blog.content = content
-            blog.put()
-            self.redirect("/post")
+        if blog_id:
+            if subject and content:
+                blog = Blogs.get_by_id(int(blog_id))
+                if not blog:
+                    self.error(404)
+                    return
+                if blog.user_id == name:
+                    blog.subject = subject
+                    blog.content = content
+                    blog.put()
+                    self.redirect("/post")
+                else:
+                    self.write("Cannot edit other's post")
 
 
 class DelPost(Handler):
