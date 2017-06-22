@@ -212,9 +212,10 @@ class Comment(db.Model):
 class Blogpost(Handler):
 
     def get(self):
+        name = self.read_secure_cookie("name")
         blogs = db.GqlQuery("Select * From Blogs Order By created DESC")
         comments = db.GqlQuery("Select * From Comment")
-        self.render("blogpost.html", blogs=blogs, comments=comments)
+        self.render("blogpost.html", blogs=blogs, comments=comments, name=name)
 
 
 class Post(Handler):
@@ -237,7 +238,7 @@ class Form(Handler):
     def get(self):
         name = self.read_secure_cookie("name")
         if name:
-            self.render("front.html")
+            self.render("front.html",name = name)
         else:
             self.redirect("/login")
 
@@ -256,7 +257,7 @@ class Form(Handler):
         else:
             error = "add both subject and content"
             self.render(
-                "front.html", subject=subject, content=content, error=error)
+                "front.html", subject=subject, content=content, error=error, name = name)
 
 
 class LikePost(Handler):
@@ -313,7 +314,7 @@ class EditComment(Handler):
             comment = Comment.get_by_id(int(blog_id))
             if comment.commentator == name:
                 self.render("editcomment.html", pretext=comment.comment, 
-                    comment=comment)
+                    comment=comment,name = name)
             else:
                 self.response.write("You can only edit your own comment")
         else:
@@ -358,7 +359,7 @@ class EditPost(Handler):
             blog = Blogs.get_by_id(int(blog_id))
             if blog.user_id == name:
                 self.render("editfront.html", subject=blog.subject,
-                 content=blog.content, blog=blog)
+                 content=blog.content, blog=blog,name = name)
             else:
                 self.response.write("You can only edit your own posts")
         else:
@@ -368,7 +369,7 @@ class EditPost(Handler):
         name = self.read_secure_cookie("name")
         subject = self.request.get("subject")
         content = self.request.get("content")
-        if blog_id:
+        if blog_id and name:
             if subject and content:
                 blog = Blogs.get_by_id(int(blog_id))
                 if not blog:
@@ -381,7 +382,8 @@ class EditPost(Handler):
                     self.redirect("/post")
                 else:
                     self.write("Cannot edit other's post")
-
+        else:
+            self.write("Not logged in")
 
 class DelPost(Handler):
 

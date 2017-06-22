@@ -7,9 +7,12 @@
 </head>
 <body>
 	<center><h1>My Blog</h1></center>
-	<h4>Click here to signup: <a href="/signup">signUp</a><h4>
-	<h4>Click here to logout: <a href="/logout">Logout</a><h4>
-	<h4>Click here to login: <a href="/login">Login</a><h4>
+	{% if name %}
+		<h4>Click here to logout: <a href="/logout">Logout</a><h4>
+	{% else %}
+		<h4>Click here to signup: <a href="/signup">signUp</a><h4>
+		<h4>Click here to login: <a href="/login">Login</a><h4>  
+    {% endif %}
     <h4>Click here to see all posts: <a href="/post">Posts</a><h4>
 	{% block content %}
 	{% endblock %}
