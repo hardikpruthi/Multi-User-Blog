@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,13 @@
 	}
 </style>
 <body>
-<center><h1>My Blog</h1></center>
+{% block content %}
+<h4>Click here to make a new post: <a href="/post/newpost">NewPost</a><h4>
+<pre>
+	
+
+<h2>Posts :<h2>
+</pre>
 	{% for blog in blogs %}
 		<div class="art">
 			<div class="art-title">{{blog.subject}}</div>
@@ -56,6 +64,9 @@
 		<br>
 		<br>
 	{% endfor %}
+{% endblock %}
+
 	<hr>
+
 </body>
 </html>

@@ -186,8 +186,8 @@ class Logout(Handler):
 
     def get(self):
         self.response.headers.add_header('Set-Cookie',
-                                         'user-id=; Path=/')
-        self.redirect("/signup")
+                                         'name=; Path=/')
+        self.redirect("/login")
 
 
 class Blogs(db.Model):
@@ -312,7 +312,8 @@ class EditComment(Handler):
         if name:
             comment = Comment.get_by_id(int(blog_id))
             if comment.commentator == name:
-                self.render("editcomment.html", pretext=comment.comment, comment=comment)
+                self.render("editcomment.html", pretext=comment.comment, 
+                    comment=comment)
             else:
                 self.response.write("You can only edit your own comment")
         else:
@@ -356,7 +357,8 @@ class EditPost(Handler):
         if name:
             blog = Blogs.get_by_id(int(blog_id))
             if blog.user_id == name:
-                self.render("editfront.html", subject=blog.subject, content=blog.content, blog=blog)
+                self.render("editfront.html", subject=blog.subject,
+                 content=blog.content, blog=blog)
             else:
                 self.response.write("You can only edit your own posts")
         else:

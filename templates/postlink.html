@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,9 +15,7 @@
 
 </style>
 <body>
-	<center>
-		<h1>MY BLOG</h1>
-	</center>
+	{% block content %}
 	<div>
 		<h2>
 			{{subject}}
@@ -25,5 +24,6 @@
 			{{content}}
 		</h4>
 	</div>
+	{% endblock %}
 </body>
 </html>

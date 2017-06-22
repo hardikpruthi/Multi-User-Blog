@@ -1,9 +1,12 @@
+{% extends "base.html" %}
+
 <!DOCTYPE html>
 <html>
 <head>
 	<title>edit comment</title>
 </head>
 <body>
+{% block content %}
 	<h1>
 		Edit Comment
 	</h1>
@@ -11,7 +14,9 @@
 		<div>Comment</div>
 		<input type="text" name="comment" value="{{pretext}}">
 		<input type="submit" name="submit" value="Submit">
+		<a href="/post">Cancel</a>
 		<div>{{error}}</div>
 	</form>
+{% endblock %}
 </body>
 </html>

@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 
 <html>
@@ -11,6 +12,7 @@
   </head>
 
   <body>
+  {% block content %}
     <h2>Login</h2>
     <form method="post">
       <table>
@@ -42,6 +44,7 @@
 
       <input type="submit">
     </form>
+    {% endblock %}
   </body>
 
 </html>
