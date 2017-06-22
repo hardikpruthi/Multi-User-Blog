@@ -1,6 +1,7 @@
 # Multi-User-Blog
 
 Here's the deployed link for the app : https://multi-user-blog-171520.appspot.com/post
+
 Follow:
 1. download and install Python and Jinja2
 2. Download and install Google Cloud App Engine SDK
